@@ -47,7 +47,7 @@ cd <caminho_para_a_pasta_descompactada>
 
 * Inicialize os serviços do Airflow:
 ```
-docker compose up airflow-init
+docker compose build --no-cache
 ```
 
 * Após isso, para iniciar os serviços do Airflow em modo detached (em segundo plano), execute:
