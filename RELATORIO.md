@@ -6,7 +6,9 @@
 
 ## 👤 Autor
 
-**Seu Nome Aqui**
+Julio Alcantra
+Tawany Barbosa
+Thiago Machado
 
 ## 🏫 Instituição
 
