@@ -7,7 +7,9 @@
 ## 👤 Autor
 
 Julio Alcantra
+
 Tawany Barbosa
+
 Thiago Machado
 
 ## 🏫 Instituição
