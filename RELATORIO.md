@@ -6,10 +6,8 @@
 
 ## 👤 Autor
 
-Julio Alcantra
-
-Tawany Barbosa
-
+Julio Alcantra, 
+Tawany Barbosa e 
 Thiago Machado
 
 ## 🏫 Instituição
