@@ -4,7 +4,7 @@ from airflow.operators.python import PythonOperator
 from pymongo import MongoClient
 from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 
-# Configurações do MongoDB (mantidas iguais)
+
 client = MongoClient('mongodb://root:example@mongo:27017/admin')
 
 db_bronze = client['bronze']
@@ -19,7 +19,6 @@ tbl_estabelecimentos = db_silver['estabelecimentos']
 tbl_empresas_s = db_silver['empresas']
 tbl_empresas_g = db_gold['empresas']
 
-# Pipelines (mantidos iguais)
 pipeline_empresas_s = [
     {
         "$lookup": {
@@ -608,12 +607,11 @@ pipeline_empresas_g = [
     }
 ]
 
-# Funções auxiliares (mantidas iguais)
 def truncate_collection(collection):
     collection.delete_many({})
     print(f"Coleção '{collection.name}' truncada.")
 
-# Tarefas da DAG
+
 def truncate_tables():
     truncate_collection(tbl_socios)
     truncate_collection(tbl_estabelecimentos)
@@ -644,7 +642,7 @@ def process_empresas_gold():
         tbl_empresas_g.replace_one({'_id': doc['_id']}, doc, upsert=True)
     print("Pipeline de empresas (gold) concluído.")
 
-# Definição da DAG
+
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
@@ -662,7 +660,6 @@ dag = DAG(
     catchup=False,
 )
 
-# Definindo as tarefas
 task_truncate = PythonOperator(
     task_id='truncate_tables',
     python_callable=truncate_tables,
@@ -703,5 +700,4 @@ trigger_dag5 = TriggerDagRunOperator(
         failed_states=['failed'],
 )
 
-# Definindo a ordem de execução
 task_truncate >> [task_socios, task_estabelecimentos] >> task_empresas_silver >> task_empresas_gold >> trigger_dag5

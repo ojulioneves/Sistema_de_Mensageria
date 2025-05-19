@@ -4,8 +4,8 @@ setup(
     name="airflow_custom_modules",
     version="1.0.0",
     description="Módulos customizados para Airflow",
-    packages=find_packages(where="plugins"),  # Procura pacotes na pasta plugins
-    package_dir={"": "plugins"},             # Define plugins/ como raiz
+    packages=find_packages(where="plugins"),  
+    package_dir={"": "plugins"},             
     install_requires=[
         "pymongo>=4.6.2",
         "pandas>=2.0.3",

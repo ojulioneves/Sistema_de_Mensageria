@@ -4,6 +4,7 @@ from datetime import datetime
 import pika
 import json
 from pymongo import MongoClient
+from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 
 def publicar_mensagens():
     mongo_client = MongoClient("mongodb://root:example@mongo:27017/admin")
@@ -37,7 +38,6 @@ def publicar_mensagens():
 
         print(f"Mensagem enviada: {mensagem}")
 
-# Definição da DAG
 with DAG(
     dag_id="publisher_dag",
     start_date=datetime(2024, 1, 1),
@@ -51,4 +51,14 @@ with DAG(
         python_callable=publicar_mensagens
     )
 
-    publicar_task
+    trigger_dag6 = TriggerDagRunOperator(
+        task_id='trigger__gold_dag6',
+        trigger_dag_id='snapshot_cleanup',
+        wait_for_completion=False,
+        reset_dag_run=True,
+        poke_interval=60,
+        allowed_states=['success'],
+        failed_states=['failed'],
+)
+
+    publicar_task >> trigger_dag6

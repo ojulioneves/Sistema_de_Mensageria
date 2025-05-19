@@ -46,19 +46,18 @@ def formatar_empresa(data):
     print(f"{Fore.YELLOW}Natureza Jurídica: {data.get('natureza_juridica', 'N/A')}")
     print(f"{Fore.YELLOW}Porte: {data.get('porte_empresa', 'N/A')}")
 
-    # Simples Nacional
+
     simples = data.get('simples', {})
     print(f"{Fore.MAGENTA}Simples Nacional: {Style.BRIGHT}{'SIM' if simples.get('opcao_simples') else 'NÃO'}")
     if simples.get('opcao_simples'):
         print(f"  📅 Desde: {simples.get('data_opcao_simples', 'N/A')}")
     print(f"{Fore.MAGENTA}MEI: {Style.BRIGHT}{'SIM' if simples.get('opcao_mei') else 'NÃO'}")
 
-    # Sócios
     print(f"{Fore.CYAN}\n👥 Sócios:")
     for socio in data.get('socios', []):
         print(f" - {socio.get('nome_socio')} ({socio.get('qualificacao_socio')}) - {socio.get('faixa_etaria')}")
 
-    # Estabelecimentos
+    
     print(f"{Fore.BLUE}\n🏢 Estabelecimentos:")
     for est in data.get('estabelecimentos', []):
         print(f" • {Style.BRIGHT}{est.get('nome_fantasia', 'N/A')} ({est.get('inscricao_federal')})")
@@ -67,7 +66,7 @@ def formatar_empresa(data):
         print(f"   Situação: {est.get('situacao_cadastral', 'N/A')} desde {est.get('data_situacao', 'N/A')}")
         print(f"   E-mail: {est.get('email', 'N/A')} | Tel: {est.get('telefone1', 'N/A')}")
 
-        # CNAEs
+        
         print(f"   🏷️ CNAEs:")
         for cnae in est.get('cnaes', []):
             tipo = "PRINCIPAL" if cnae.get('principal') else "Secundário"
