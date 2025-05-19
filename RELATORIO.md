@@ -64,6 +64,7 @@ A automação do processo será realizada com o uso de **Airflow** para orquestr
 
 ### 1.3 Metas
 
+- Dados Seguros e de Qualidade
 - Identificar e categorizar automaticamente empresas novas por CNAE
 - Monitorar a chegada de novos registros periodicamente
 - Enviar os dados organizados em filas temáticas via RabbitMQ
