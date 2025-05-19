@@ -6,6 +6,7 @@
 
 ## 👤 Autor
 
+Carlos Filho,
 Julio Alcantra, 
 Tawany Barbosa e 
 Thiago Machado
@@ -81,30 +82,37 @@ A automação do processo será realizada com o uso de **Airflow** para orquestr
 ## 2. Data Understanding
 
 ### 2.1 Coleta Inicial dos Dados
-As bases de dados são arquivos CSV fornecidos por um sistema externo ou API que contém o CNPJ, Nome, CNAE principal e secundário, entre outros campos.
+As bases de dados são arquivos CSV fornecidos por um sistema externo que contém  CNPJ, Empresas, Simples, Socios, Qualificações, Snapshot, Naturezas, Estabelecimentos, Municipios, Paises, Socios, CNAE principal e secundário, entre outros campos.
 
 Arquivos:
 
 - CNPJ
-- Nome
+- Simples
+- Socios
+- Qualificações
+- Snapshot
+- Naturezas
+- Estabelecimentos 
+- Empresas
 - CNAE principal e secundário
-- UF
+- Endereço
 
 ### 2.2 Descrição dos Dados
 Os campos principais analisados são: 
 
-| Campo           | Tipo   | Descrição                             |
-|----------------|--------|----------------------------------------|
-| CNPJ           | String | Identificador único da empresa         |
-| Nome           | String | Nome fantasia ou razão social          |
-| CNAE_Principal | String | Atividade principal                    |
-| CNAE_Secundario| Lista  | Atividades complementares              |
-| UF             | String | Estado                                 |
+| Campo             | Tipo   |
+|-------------------|--------|
+| CNPJ              | String | 
+| Nome              | String | 
+| Empresas          | String | 
+| Estabelecimentos  | String |             |
+| Endereço          | String |
+| CNAE              | String |
 
 ### 2.3 Exploração dos Dados
 
 - 📊 Frequência dos CNAEs
-- 🗺️ Distribuição por UF
+- 🗺️ Distribuição por Estados
 - 🆕 Empresas novas detectadas em cada lote
 
 ### 2.4 Qualidade dos Dados
@@ -158,17 +166,14 @@ Os demais campos foram descartados para manter o foco do projeto.
 
 - Scripts Python categorizando empresas per CNAEs
 - Envio para RabbitMQ com base no setor
-- Criação de filas: 
-  - `comercio`
-  - `industria`
-  - `servicos`
-  - `outros`
+- Criação de fila: 
+  - `espresas`
 
 ### 4.4 Avaliação de Modelo
 
 Testes em lote e em produção confirmam: 
 - ✅ 100% de identificação
-- 📦 99,8% de envio correto para a fila
+- 📦 100% de envio correto para a fila
 
 ---
 
@@ -197,7 +202,7 @@ Processo segue o objetivo original com:
 
 ### 6.1 Pipeline via Airflow
 
-- DAG diária executa:
+- DAG mensal executa:
   - Leitura de novos dados
   - Comparação com base anterior
   - Categorização
@@ -213,7 +218,7 @@ Processo segue o objetivo original com:
 
 | Item        | Resultado                         |
 |-------------|-----------------------------------|
-| ✅ Objetivo | Detecção de novas empresas        |
+| ✅ Objetivo | Dados de Qualidade e Segurança        |
 | ⚙️ Ferramentas | Airflow, Python, MongoDB, RabbitMQ |
 | 💰 Custo     | Baixo (open-source)              |
 | 📈 Status    | Em produção                      |
@@ -222,7 +227,7 @@ Processo segue o objetivo original com:
 
 | ✅ Funcionou bem                  | ⚠️ Melhorias sugeridas                   |
 |-------------------------------|---------------------------------------|
-| Automação diária via Airflow  | Considerar CNAEs secundários       |
+| Automação mensal via Airflow  | Considerar CNAEs secundários       |
 | Categorização precisa         | Criação de uma base de treinamento futura para classificação com IA |
 
 ---
@@ -240,7 +245,7 @@ Processo segue o objetivo original com:
 
 ### 🔁 Ciclo de Execução da DAG
 
-1. Trigger diaria do Airflow
+1. Trigger mensal do Airflow
 2. Leitura dos novos dados
 3. Comparação com CNPJs conhecidos
 4. Geração de `payloads` JSON
