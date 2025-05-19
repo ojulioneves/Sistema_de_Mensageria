@@ -1,0 +1,9 @@
+# Dependências principais
+pymongo==4.6.2  # Versão estável recomendada
+pandas==2.1.4    # Caso precise
+apache-airflow-providers-mongo==3.3.0  # Integração Airflow-MongoDB
+
+# Outras dependências (adicione conforme necessário)
+requests==2.31.0
+python-dotenv==1.0.0
+pika==1.3.2
