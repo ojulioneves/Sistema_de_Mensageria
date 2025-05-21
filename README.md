@@ -1,16 +1,38 @@
-# 📘 Configuração e Instalação 
+# 📦 Sistema de Mensageria com Airflow, MongoDB e RabbitMQ
 
-## 📌 Sumário
+Este projeto implementa um pipeline completo de processamento e mensageria utilizando Apache Airflow, MongoDB e RabbitMQ, tudo containerizado com Docker. O objetivo principal é o tratamento e envio de dados da Receita Federal para filas de mensageria, facilitando integrações e análises em tempo real.
 
+## 🔧 Tecnologias Utilizadas
 
+- [Apache_Airflow]
+- [MongoDB]
+- [RabbitMQ]
+- [Docker]
+- Linguagem: **Python**
 
-Este repositório descreve os procedimentos técnicos para instalação e configuração dos seguintes componentes:
+## 📁 Estrutura do Projeto
 
-MongoDB via Docker
+O projeto é composto por **6 DAGs principais**, divididas por responsabilidades específicas:
 
-Mongo Compass (interface gráfica)
+### 1. `cnpj_downloader`
+Realiza o download mensal dos dados brutos da Receita Federal para processamento posterior. Essa dag age como mestre encadeando todas as outras.
 
-Apache Airflow com integração ao MongoDB
+### 2. `cnpj_processor`
+Processa os arquivos .zip baixados, descompacta eles e transforma em um arquivo .csv legível.
+
+### 3. `cnpj_db_loader`
+Aplica tratamentos adicionais e organiza os dados para armazenamento estruturado na base `bronze`.
+
+### 4. `cnpj_gold_ingestion`
+Injeta os dados das collections `empresas`, `socios` e `estabelecimentos` da base `bronze` dentro da base `silver` para identificar **empresas novas**. Os dados filtrados são inseridos na base `gold`, na collection `empresas`.
+
+### 5. `cnpj_publisher`
+Envia os dados da collection `empresas` (base `gold`) para uma fila no RabbitMQ, permitindo integração com sistemas consumidores.
+
+### 6. `cnpj_pipeline_finalize`
+Realiza o snapshot dos dados do banco `gold`, salvando uma cópia da collection `empresas` na collection `snapshot` da base `bronze`. Em seguida, os dados temporários da base `bronze` são limpos.
+
+## 🐳 Como Executar
 
 ## ✅ Pré-requisitos
 Docker instalado no sistema operacional
