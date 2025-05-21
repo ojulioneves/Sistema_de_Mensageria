@@ -1,6 +1,6 @@
 # 📦 Sistema de Mensageria com Airflow, MongoDB e RabbitMQ
 
-Este projeto implementa um pipeline completo de processamento e mensageria utilizando Apache Airflow, MongoDB e RabbitMQ, tudo containerizado com Docker. O objetivo principal é o tratamento e envio de dados da Receita Federal para filas de mensageria, facilitando integrações e análises em tempo real.
+Este projeto implementa um pipeline completo de processamento e mensageria utilizando Apache Airflow, MongoDB e RabbitMQ, tudo containerizado com Docker. O objetivo principal é o tratamento e envio de dados da Receita Federal para filas de mensageria, facilitando integrações e análises em tempo real. Tem como resultado os dados de empresas novas dos CNAEs específicos ("5250803", "5231102", "5250804"), podendo ser alterado conforme a necessidade.
 
 ## 🔧 Tecnologias Utilizadas
 
